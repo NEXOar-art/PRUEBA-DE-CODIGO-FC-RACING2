@@ -21,7 +21,6 @@ body{margin:0;background:#fff;color:var(--text);font-family:Arial,Helvetica,sans
 button,input,select{font:inherit}
 a{text-decoration:none;color:inherit}
 .topbar{height:38px;background:#050505;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-size:12px;letter-spacing:.5px}
-.topbar-left{display:flex;align-items:center;gap:15px}
 .topbar-right{display:flex;align-items:center;gap:15px}
 .social-icon{color:#fff;font-size:18px;transition:.3s}
 .social-icon:hover{color:var(--red)}
@@ -29,21 +28,65 @@ a{text-decoration:none;color:inherit}
 .header-main{max-width:1200px;margin:auto;height:94px;display:flex;align-items:center;gap:28px;padding:0 22px}
 .logo{font-weight:950;font-style:italic;font-size:30px;letter-spacing:-2px;white-space:nowrap}
 .logo span{color:var(--red)}
-.search{height:44px;flex:1;display:flex;border:1px solid #bbb;border-radius:3px;overflow:hidden}
-.search input{border:0;outline:0;padding:0 16px;flex:1;font-size:14px}
-.search button{width:52px;border:0;background:#111;color:#fff;cursor:pointer}
+.search{height:44px;flex:1;display:flex;border:1px solid #bbb;border-radius:3px;overflow:visible;position:relative}
+.search input{border:0;outline:0;padding:0 16px;flex:1;font-size:14px;border-radius:3px 0 0 3px}
+.search button{width:52px;border:0;background:#111;color:#fff;cursor:pointer;border-radius:0 3px 3px 0}
 .header-actions{display:flex;gap:20px;font-size:13px;align-items:center}
 .cart-btn{position:relative;border:0;background:transparent;cursor:pointer;font-size:14px}
 .badge{position:absolute;top:-9px;right:-12px;background:var(--red);color:#fff;border-radius:50%;font-size:10px;min-width:18px;height:18px;display:grid;place-items:center}
-.nav{border-top:1px solid #eee;border-bottom:1px solid #eee}
+/* ===== NAV + MEGA MENU DESPLEGABLE ===== */
+.nav{border-top:1px solid #eee;border-bottom:1px solid #eee;position:relative;z-index:70}
 .nav-inner{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:center;gap:0;overflow:auto}
-.nav a{padding:15px 17px;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer}
+.nav a{padding:15px 17px;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;display:flex;align-items:center;gap:6px}
 .nav a:hover{background:#f5f5f5;color:var(--red)}
 .nav a.active{background:var(--red);color:#fff}
-.brands{height:105px;max-width:1200px;margin:auto;display:flex;align-items:center;gap:45px;justify-content:space-between;padding:0 24px;overflow:hidden}
-.brand{font-weight:900;font-style:italic;font-size:22px;letter-spacing:-1px;white-space:nowrap;filter:grayscale(1)}
-.brand small{display:block;font-size:7px;text-align:center;letter-spacing:1px}
-.arrow{font-size:32px;color:#666;flex:0 0 auto;cursor:pointer}
+.nav a .caret{font-size:8px;opacity:.7}
+.mega-menu{position:absolute;left:0;right:0;top:100%;background:#fff;border:1px solid #e5e5e5;border-top:0;box-shadow:0 14px 28px rgba(0,0,0,.12);display:none;z-index:75}
+.mega-menu.open{display:block}
+.mega-inner{max-width:1200px;margin:auto;padding:22px;display:flex;flex-direction:column;gap:18px;max-height:62vh;overflow:auto}
+.mega-head{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--red);padding-bottom:10px}
+.mega-head h3{margin:0;font-size:16px;font-style:italic;font-weight:950;text-transform:uppercase}
+.mega-head button{border:0;background:#f1f1f1;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px}
+.mega-group h4{margin:0 0 9px;font-size:11px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;font-weight:900}
+.mega-tiles{display:flex;flex-wrap:wrap;gap:8px;max-height:170px;overflow:auto;padding:2px}
+.mega-tile{display:flex;align-items:center;gap:7px;border:1px solid #ddd;border-radius:6px;padding:7px 11px;font-size:12px;cursor:pointer;background:#fafafa;user-select:none;transition:.2s}
+.mega-tile:hover{border-color:var(--red)}
+.mega-tile input{accent-color:var(--red);cursor:pointer;margin:0}
+.mega-tile.checked{border-color:var(--red);background:#fff0f0;color:var(--red);font-weight:700}
+.mega-tile .tcount{color:#999;font-size:10px;margin-left:2px}
+/* ===== MARQUESINA DE MARCAS (ANIMADA) ===== */
+.brands-marquee{overflow:hidden;background:#fff;border-bottom:1px solid #eee;padding:20px 0;position:relative}
+.marquee-track{display:flex;width:max-content;animation:marquee 38s linear infinite}
+.brands-marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-group{display:flex;align-items:center;gap:75px;padding-right:75px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.lg{display:flex;flex-direction:column;align-items:center;justify-content:center;filter:grayscale(1);opacity:.9;white-space:nowrap}
+.lg-sub{font-size:7px;letter-spacing:1.5px;font-weight:700;margin-top:2px;text-align:center}
+.lg-mitas{font-style:italic;font-weight:900;font-size:27px;letter-spacing:-1px}
+.lg-mobius{font-weight:300;font-size:24px;letter-spacing:3px}
+.lg-otras{font-style:italic;font-weight:800;font-size:19px;display:flex;gap:5px;align-items:center}
+.lg-otras b{background:#111;color:#fff;padding:2px 9px;transform:skew(-12deg);font-style:italic}
+.lg-protaper{border:3px solid #111;border-radius:12px;padding:3px 14px;font-weight:900;font-style:italic;font-size:19px;letter-spacing:1px;transform:skew(-4deg)}
+.lg-proteam{font-style:italic;font-weight:900;font-size:19px;display:flex;align-items:center}
+.lg-proteam b{background:#22c55e;color:#fff;padding:1px 9px;transform:skew(-14deg);margin-left:3px}
+.lg-raba-icon{width:26px;height:26px;background:#3ddc55;clip-path:polygon(30% 0,100% 15%,85% 60%,55% 45%,70% 100%,15% 75%);margin-bottom:3px}
+.lg-raba{font-weight:900;font-size:15px;letter-spacing:.5px}
+.lg-gbs{display:flex;align-items:center;gap:6px;font-weight:900;font-style:italic;font-size:24px}
+.lg-gbs i{background:#111;color:#fff;border-radius:7px;font-size:19px;padding:1px 7px;transform:rotate(-6deg)}
+.lg-hiflo{font-weight:800;font-size:20px;letter-spacing:.5px}
+.lg-hiflo b{color:#22c55e;font-weight:800}
+.lg-jado{font-weight:900;font-size:25px;letter-spacing:-1px}
+.lg-jt{font-weight:900;font-size:27px;letter-spacing:-3px}
+.lg-kewiq{display:flex;align-items:center;gap:6px;font-weight:800;font-size:18px}
+.lg-kewiq i{border:3px solid #111;border-radius:9px;font-style:normal;font-weight:900;padding:0 5px;font-size:16px}
+.lg-lucas{color:#d22;font-style:italic;font-weight:900;font-size:20px;letter-spacing:1px}
+.lg-coo-icon{width:36px;height:22px;background:#111;border-radius:50%;position:relative;margin-bottom:3px}
+.lg-coo-icon:after{content:"";position:absolute;left:9px;top:6px;width:11px;height:11px;background:#fff;border-radius:50%}
+.lg-coo{font-weight:800;font-size:15px;letter-spacing:1px}
+.lg-diafrag{font-weight:900;font-style:italic;font-size:19px;display:flex;align-items:center;gap:5px}
+.lg-diafrag i{font-style:normal;font-size:14px}
+.lg-excel{font-style:italic;font-weight:900;font-size:23px;letter-spacing:2px}
+/* ===== HERO ===== */
 .hero{max-width:1240px;margin:auto;height:260px;position:relative;overflow:hidden;background:
 linear-gradient(90deg,rgba(255,255,255,.1),rgba(255,255,255,.05)),
 url("https://images.unsplash.com/photo-1504215680853-026ed2a45def?auto=format&fit=crop&w=1800&q=80") center/cover}
@@ -57,52 +100,82 @@ url("https://images.unsplash.com/photo-1504215680853-026ed2a45def?auto=format&fi
 .box{width:76px;height:95px;background:#f3d526;border:4px solid #e5c300;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;transform:rotate(-2deg);box-shadow:0 6px 10px #0003}
 .dots{position:absolute;z-index:4;bottom:8px;right:12px;display:flex;gap:4px}
 .dots i{width:9px;height:9px;background:#fff;border-radius:50%;opacity:.8}
-.section{max-width:1200px;margin:27px auto 0;padding:0 12px}
-.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:25px;flex-wrap:wrap;gap:15px}
+/* ===== LAYOUT TIENDA: SIDEBAR FILTROS + PRODUCTOS ===== */
+.section{max-width:1250px;margin:27px auto 0;padding:0 12px}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:15px}
 .section-title h2{margin:0;font-size:24px;font-style:italic;font-weight:950}
-.more{background:var(--red);color:#fff;padding:7px 14px;font-weight:900;font-style:italic;border:0;cursor:pointer}
-.filters{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
-.filter-select{padding:8px 12px;border:1px solid #ccc;border-radius:4px;font-size:13px;min-width:150px}
-.filter-select:focus{outline:0;border-color:var(--red)}
-.products-wrap{position:relative}
-.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:24px}
+.shop-layout{display:flex;gap:22px;align-items:flex-start}
+.filter-sidebar{width:255px;flex:0 0 255px;background:#fff;border:1px solid #e5e5e5;border-radius:8px;padding:16px;position:sticky;top:10px;max-height:calc(100vh - 20px);overflow:auto}
+.sidebar-head{display:flex;justify-content:space-between;align-items:center;font-weight:950;font-style:italic;font-size:16px;border-bottom:2px solid var(--red);padding-bottom:10px;margin-bottom:12px}
+.sidebar-head button{display:none;border:0;background:#f1f1f1;width:28px;height:28px;border-radius:50%;cursor:pointer}
+.sidebar-search{position:relative;margin-bottom:14px}
+.sidebar-search input{width:100%;padding:9px 12px;border:1px solid #ccc;border-radius:4px;font-size:12px}
+.sidebar-search i{position:absolute;right:10px;top:9px;color:#999;font-size:12px}
+.facet-group{border-bottom:1px solid #eee;padding:11px 0}
+.facet-group:last-of-type{border-bottom:0}
+.facet-title{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:#333;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
+.facet-title i{font-size:10px;color:#999;transition:.2s}
+.facet-group.collapsed .facet-title i{transform:rotate(-90deg)}
+.facet-group.collapsed .facet-list{display:none}
+.facet-list{margin-top:9px;display:flex;flex-direction:column;gap:6px}
+.facet-list.scroll{max-height:190px;overflow:auto;padding-right:4px}
+.facet-item{display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;line-height:1.25}
+.facet-item input{accent-color:var(--red);cursor:pointer;margin:0;flex:0 0 auto}
+.facet-item span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.facet-item .facet-count{margin-left:auto;color:#aaa;font-size:10px;flex:0 0 auto}
+.facet-item:hover span{color:var(--red)}
+.facet-more{border:0;background:none;color:var(--red);font-size:11px;font-weight:700;cursor:pointer;padding:5px 0 0}
+.clear-filters{width:100%;margin-top:14px;padding:10px;border:1px solid var(--red);background:#fff;color:var(--red);font-weight:900;font-size:12px;cursor:pointer;border-radius:4px}
+.clear-filters:hover{background:var(--red);color:#fff}
+.shop-main{flex:1;min-width:0}
+.shop-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.mobile-filter-btn{display:none;border:1px solid #111;background:#111;color:#fff;padding:8px 14px;font-weight:900;font-size:12px;cursor:pointer;border-radius:4px}
+.result-count{font-size:12px;color:var(--muted);font-weight:700}
+.active-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.active-filter-tag{background:var(--red);color:#fff;padding:4px 10px;border-radius:15px;font-size:11px;display:flex;align-items:center;gap:6px;font-weight:700}
+.active-filter-tag button{background:none;border:0;color:#fff;cursor:pointer;font-size:14px;padding:0;width:14px;height:14px;line-height:1}
+.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:20px}
 .product{border:1px solid #ccc;background:#fff;min-width:0;position:relative;padding:9px 12px 13px;display:flex;flex-direction:column;min-height:385px;transition:.3s}
 .product:hover{box-shadow:0 4px 12px rgba(0,0,0,.1);transform:translateY(-2px)}
 .product-image{height:145px;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:8px;background:#f9f9f9}
 .product-image img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
-.new{position:absolute;right:0;top:0;background:#11bce0;color:#fff;font-size:10px;padding:4px 8px;border-radius:0 0 0 10px}
 .out-of-stock{position:absolute;left:0;top:0;background:var(--red);color:#fff;font-size:10px;padding:4px 8px;border-radius:0 0 10px 0}
+.new-tag{position:absolute;right:0;top:0;background:#11bce0;color:#fff;font-size:10px;padding:4px 8px;border-radius:0 0 0 10px}
 .product-category{font-size:9px;color:var(--muted);text-transform:uppercase;margin-bottom:4px;font-weight:700}
 .product h3{font-size:11px;line-height:1.3;margin:3px 0 2px;text-transform:uppercase;min-height:28px}
 .code{font-size:10px;color:#777;margin-bottom:6px}
-.brand-tag{font-size:9px;color:var(--red);font-weight:700;margin-bottom:8px}
+.brand-tag{font-size:9px;color:var(--red);font-weight:700;margin-bottom:6px}
+.product-attrs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px}
+.product-attr{background:#f0f0f0;padding:2px 6px;border-radius:3px;font-size:9px}
 .price{font-size:15px;font-weight:800;margin-top:auto;padding:7px 0;color:var(--green)}
 .stock-info{font-size:10px;color:var(--muted);margin-bottom:5px}
-.stock-info.low{color:var(--red)}
+.stock-info.low{color:var(--red);font-weight:700}
 .qty{display:flex;gap:4px;margin-bottom:5px}
 .qty input{width:45px;text-align:center;border:0;background:#f1f1f1;height:34px}
 .qty button{width:31px;border:0;background:#050505;color:#fff;font-weight:900;cursor:pointer}
 .buy{height:34px;border:0;background:var(--green);color:#fff;font-size:11px;font-weight:900;cursor:pointer;transition:.3s}
 .buy:hover{background:#12a54a}
 .buy.out{background:var(--yellow);cursor:not-allowed}
-.buy.out:hover{background:var(--yellow)}
 .tax{font-size:8px;text-align:right;color:#777;margin-top:3px}
-.side-arrow{position:absolute;top:48%;font-size:38px;color:#666;cursor:pointer;z-index:5}
-.side-arrow.left{left:-35px}.side-arrow.right{right:-35px}
 .divider{max-width:505px;margin:40px auto 25px;background:#050505;color:#fff;text-align:center;font-size:22px;font-weight:900;font-style:italic;padding:5px}
 .liquidation{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .liquidation img{width:100%;height:190px;object-fit:cover;filter:grayscale(1)}
-.categories{margin-top:45px;background:#f5f5f5;padding:38px 0}
-.cat-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:0 12px}
-.cat{background:#fff;border:1px solid #ddd;padding:20px;text-align:center;font-weight:900;cursor:pointer;transition:.3s}
-.cat:hover{background:var(--red);color:#fff}
+/* ===== SUGERENCIAS BUSCADOR ===== */
+.search-suggestions{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #ddd;border-top:0;max-height:400px;overflow-y:auto;z-index:120;display:none;box-shadow:0 8px 16px rgba(0,0,0,.12);border-radius:0 0 4px 4px}
+.search-suggestions.active{display:block}
+.suggestion-item{padding:11px 16px;cursor:pointer;border-bottom:1px solid #f0f0f0}
+.suggestion-item:hover{background:#f9f9f9}
+.suggestion-title{font-weight:700;font-size:13px;margin-bottom:3px}
+.suggestion-meta{font-size:11px;color:var(--muted)}
+.suggestion-type{display:inline-block;font-size:9px;background:#eee;border-radius:3px;padding:1px 6px;margin-right:6px;color:#555;font-weight:700}
+/* ===== FOOTER / CARRITO ===== */
 footer{background:#080808;color:#fff;margin-top:45px;padding:40px 20px}
 .footer-inner{max-width:1200px;margin:auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:30px}
 .footer-logo{font-size:28px;font-weight:950;font-style:italic}
 .footer h4{margin-top:0}.footer p,.footer li{color:#aaa;font-size:12px;line-height:1.8}.footer ul{list-style:none;padding:0}
 .contact-info{margin-top:15px}
 .contact-info p{margin:5px 0;display:flex;align-items:center;gap:8px}
-.cart-panel{position:fixed;z-index:20;right:-420px;top:0;width:390px;height:100vh;background:#fff;box-shadow:-8px 0 30px #0002;transition:.3s;padding:22px;display:flex;flex-direction:column}
+.cart-panel{position:fixed;z-index:200;right:-420px;top:0;width:390px;height:100vh;background:#fff;box-shadow:-8px 0 30px #0002;transition:.3s;padding:22px;display:flex;flex-direction:column}
 .cart-panel.open{right:0}
 .cart-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ddd;padding-bottom:15px}
 .close{border:0;background:none;font-size:28px;cursor:pointer}
@@ -125,33 +198,34 @@ footer{background:#080808;color:#fff;margin-top:45px;padding:40px 20px}
 .checkout:hover{background:#d00}
 .checkout:disabled{background:#ccc;cursor:not-allowed}
 .empty-cart{text-align:center;padding:40px 20px;color:var(--muted)}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:15;display:none}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:150;display:none}
 .overlay.active{display:block}
-.loading{text-align:center;padding:40px;font-size:16px;color:var(--muted)}
-.no-results{text-align:center;padding:60px 20px;color:var(--muted);font-size:18px}
-@media(max-width:1000px){.products{grid-template-columns:repeat(3,1fr)}.brands{gap:20px}.footer-inner{grid-template-columns:1fr 1fr}}
+.loading,.no-results{text-align:center;padding:60px 20px;color:var(--muted);font-size:16px;grid-column:1/-1}
+/* ===== RESPONSIVE ===== */
+@media(max-width:1000px){.products{grid-template-columns:repeat(3,1fr)}.footer-inner{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){
+ .filter-sidebar{position:fixed;left:-300px;top:0;height:100vh;z-index:180;border-radius:0;transition:.3s;max-height:100vh;width:280px}
+ .filter-sidebar.open{left:0}
+ .sidebar-head button{display:block}
+ .mobile-filter-btn{display:block}
+}
 @media(max-width:650px){
  .header-main{height:auto;padding:14px;flex-wrap:wrap}.logo{font-size:25px}.search{order:3;flex-basis:100%}
- .header-actions{margin-left:auto}.nav-inner{justify-content:flex-start}.brands{height:80px}.brand:nth-of-type(n+4){display:none}
+ .header-actions{margin-left:auto}.nav-inner{justify-content:flex-start}
  .hero{height:240px}.hero-content{padding:15px}.hero-copy{max-width:245px}.hero-copy h1{font-size:18px}
  .hero-products{display:none}.products{grid-template-columns:repeat(2,1fr);gap:10px}.product{min-height:360px}
- .side-arrow{display:none}.liquidation{grid-template-columns:1fr}.cat-grid{grid-template-columns:repeat(2,1fr)}
- .cart-panel{width:100%;right:-100%}.cart-panel.open{right:0}.filters{flex-direction:column}.filter-select{width:100%}
+ .liquidation{grid-template-columns:1fr}
+ .cart-panel{width:100%;right:-100%}.cart-panel.open{right:0}
+ .marquee-group{gap:45px;padding-right:45px}
 }
 </style>
 </head>
 <body>
 <div class="topbar">
-  <div class="topbar-left">
-    <span>FC RACING · REPUESTOS Y ACCESORIOS PARA MOTOS · VENTAS ONLINE</span>
-  </div>
+  <span>FC RACING · REPUESTOS Y ACCESORIOS PARA MOTOS · VENTAS ONLINE</span>
   <div class="topbar-right">
-    <a href="https://www.instagram.com/vicangnc_salsipuedes/" target="_blank" class="social-icon" title="Instagram">
-      <i class="fab fa-instagram"></i>
-    </a>
-    <a href="https://wa.me/3543546389" target="_blank" class="social-icon" title="WhatsApp">
-      <i class="fab fa-whatsapp"></i>
-    </a>
+    <a href="https://www.instagram.com/vicangnc_salsipuedes/" target="_blank" class="social-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://wa.me/3543546389" target="_blank" class="social-icon" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
   </div>
 </div>
 
@@ -159,31 +233,23 @@ footer{background:#080808;color:#fff;margin-top:45px;padding:40px 20px}
   <div class="header-main">
     <div class="logo">FC <span>RACING</span></div>
     <div class="search">
-      <input id="search" placeholder="Buscar por producto, código, marca, categoría o descripción...">
-      <button onclick="filterProducts()"><i class="fas fa-search"></i></button>
+      <input id="search" placeholder="Buscar: producto, código, marca, modelo de moto, color, descripción...">
+      <button onclick="performSearch()"><i class="fas fa-search"></i></button>
+      <div class="search-suggestions" id="searchSuggestions"></div>
     </div>
     <div class="header-actions">
-      <button class="cart-btn" onclick="toggleCart()">
-        <i class="fas fa-shopping-cart"></i> Carrito <b id="cartCount" class="badge">0</b>
-      </button>
+      <button class="cart-btn" onclick="toggleCart()"><i class="fas fa-shopping-cart"></i> Carrito <b id="cartCount" class="badge">0</b></button>
     </div>
   </div>
-  <nav class="nav">
-    <div class="nav-inner" id="navMenu">
-      <a href="#" class="active" onclick="showAll(event)">TODOS</a>
-    </div>
+  <nav class="nav" id="mainNav">
+    <div class="nav-inner" id="navMenu"></div>
+    <div class="mega-menu" id="megaMenu"></div>
   </nav>
 </header>
 
-<div class="brands">
-  <div class="arrow">‹</div>
-  <div class="brand">EXCEL<small>TAKASAGO RIM</small></div>
-  <div class="brand">GBS<small>MOTO PARTS</small></div>
-  <div class="brand">HIFLOFILTRO<small>PREMIUM FILTERS</small></div>
-  <div class="brand">JADO<small>MOTO MULTIMEDIA SYSTEMS</small></div>
-  <div class="brand">SPROCKETS</div>
-  <div class="brand">KEWIQ</div>
-  <div class="arrow">›</div>
+<!-- MARQUESINA ANIMADA DE MARCAS -->
+<div class="brands-marquee">
+  <div class="marquee-track" id="marqueeTrack"></div>
 </div>
 
 <section class="hero">
@@ -194,42 +260,31 @@ footer{background:#080808;color:#fff;margin-top:45px;padding:40px 20px}
       <p>Repuestos, accesorios y equipamiento para motos.</p>
     </div>
     <div class="hero-products">
-      <div class="box">FC<br>RACING</div>
-      <div class="box">MOTO<br>PARTS</div>
-      <div class="box">PRO<br>RIDER</div>
+      <div class="box">FC<br>RACING</div><div class="box">MOTO<br>PARTS</div><div class="box">PRO<br>RIDER</div>
     </div>
   </div>
   <div class="dots"><i></i><i></i><i></i></div>
 </section>
 
-<section class="section" id="novedades">
-  <div class="section-title">
-    <h2>NUESTROS PRODUCTOS</h2>
-    <div id="productCount"></div>
-  </div>
-  
-  <div class="filters">
-    <select class="filter-select" id="categoryFilter" onchange="filterProducts()">
-      <option value="">Todas las categorías</option>
-    </select>
-    <select class="filter-select" id="subcategoryFilter" onchange="filterProducts()">
-      <option value="">Todas las subcategorías</option>
-    </select>
-    <select class="filter-select" id="brandFilter" onchange="filterProducts()">
-      <option value="">Todas las marcas</option>
-    </select>
-    <select class="filter-select" id="stockFilter" onchange="filterProducts()">
-      <option value="">Disponibilidad</option>
-      <option value="in">En stock</option>
-      <option value="low">Stock bajo</option>
-      <option value="out">Sin stock</option>
-    </select>
-  </div>
-
-  <div class="products-wrap">
-    <div class="products" id="products">
-      <div class="loading">Cargando productos desde la base de datos...</div>
+<!-- TIENDA: SIDEBAR DE FILTROS + PRODUCTOS EN VIVO -->
+<section class="section shop-layout" id="tienda">
+  <aside class="filter-sidebar" id="filterSidebar">
+    <div class="sidebar-head">FILTRAR PRODUCTOS <button onclick="closeSidebar()">×</button></div>
+    <div class="sidebar-search">
+      <input id="sideSearch" placeholder="Palabras clave del producto...">
+      <i class="fas fa-search"></i>
     </div>
+    <div id="facetContainer"><div class="loading" style="padding:20px">Cargando filtros...</div></div>
+    <button class="clear-filters" onclick="clearAllFilters()"><i class="fas fa-eraser"></i> LIMPIAR TODOS LOS FILTROS</button>
+  </aside>
+
+  <div class="shop-main">
+    <div class="shop-toolbar">
+      <button class="mobile-filter-btn" onclick="openSidebar()"><i class="fas fa-sliders-h"></i> FILTROS</button>
+      <span class="result-count" id="productCount"></span>
+    </div>
+    <div class="active-filters" id="activeFilters"></div>
+    <div class="products" id="products"><div class="loading">Cargando productos desde la base de datos...</div></div>
   </div>
 </section>
 
@@ -243,9 +298,10 @@ footer{background:#080808;color:#fff;margin-top:45px;padding:40px 20px}
   </div>
 </section>
 
-<section class="categories" id="categorias">
-  <div class="section-title"><h2>CATEGORÍAS PRINCIPALES</h2></div>
-  <div class="cat-grid" id="categoryGrid"></div>
+<!-- PRODUCTOS RELACIONADOS Y RECOMENDADOS (reemplaza tarjetas de categorías) -->
+<section class="section" id="recomendados">
+  <div class="section-title"><h2>PRODUCTOS RELACIONADOS Y RECOMENDADOS</h2></div>
+  <div class="products" id="recommendedGrid"></div>
 </section>
 
 <footer>
@@ -262,12 +318,7 @@ footer{background:#080808;color:#fff;margin-top:45px;padding:40px 20px}
     </div>
     <div>
       <h4>AYUDA</h4>
-      <ul>
-        <li>Preguntas frecuentes</li>
-        <li>Envíos</li>
-        <li>Medios de pago</li>
-        <li>Contacto</li>
-      </ul>
+      <ul><li>Preguntas frecuentes</li><li>Envíos</li><li>Medios de pago</li><li>Contacto</li></ul>
     </div>
     <div>
       <h4>REDES SOCIALES</h4>
@@ -282,15 +333,9 @@ footer{background:#080808;color:#fff;margin-top:45px;padding:40px 20px}
 <div class="overlay" id="overlay" onclick="toggleCart()"></div>
 
 <aside class="cart-panel" id="cart">
-  <div class="cart-head">
-    <strong>MI CARRITO</strong>
-    <button class="close" onclick="toggleCart()">×</button>
-  </div>
+  <div class="cart-head"><strong>MI CARRITO</strong><button class="close" onclick="toggleCart()">×</button></div>
   <div class="cart-items" id="cartItems"></div>
-  <div class="cart-total">
-    Total: $ <span id="total">0</span>
-  </div>
-  
+  <div class="cart-total">Total: $ <span id="total">0</span></div>
   <div class="checkout-form" id="checkoutForm">
     <input type="text" id="customerName" placeholder="Nombre y Apellido" required>
     <input type="text" id="customerCity" placeholder="Ciudad" required>
@@ -301,464 +346,417 @@ footer{background:#080808;color:#fff;margin-top:45px;padding:40px 20px}
       <option value="transferencia">Transferencia bancaria</option>
       <option value="mercadopago">Mercado Pago</option>
     </select>
-    <button class="checkout" onclick="completePurchase()">
-      <i class="fab fa-whatsapp"></i> ENVIAR PEDIDO POR WHATSAPP
-    </button>
+    <button class="checkout" onclick="completePurchase()"><i class="fab fa-whatsapp"></i> ENVIAR PEDIDO POR WHATSAPP</button>
   </div>
-  
-  <button class="checkout" id="checkoutBtn" onclick="showCheckoutForm()">
-    CONTINUAR COMPRA
-  </button>
+  <button class="checkout" id="checkoutBtn" onclick="showCheckoutForm()">REALIZAR PEDIDO</button>
 </aside>
 
 <script>
-// Variables globales
-let allProducts = [];
-let filteredProducts = [];
-let cart = [];
-const WHATSAPP_NUMBER = '3543546389';
+/* ================= CONFIGURACIÓN ================= */
+const SHEET_URL='https://docs.google.com/spreadsheets/d/1-6YzmuFi9fXiQErHVCO8tLmyiv5-7HjCmyYpfRv43Lk/export?format=csv';
+const WHATSAPP_NUMBER='3543546389';
+const IMG_BASE=''; // si tus imágenes están en un servidor, pon aquí la URL base ej: 'https://tusitio.com/fotos/'
 
-// Formatear número como moneda
-const money = n => n.toLocaleString("es-AR", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+let allProducts=[], filteredProducts=[], cart=[];
+let state={ search:'', filters:{}, expanded:{}, collapsed:{}, megaCat:null };
 
-// Parsear precio del formato "$383.447,99" a número
-function parsePrice(priceStr) {
-  if (!priceStr) return 0;
-  const clean = priceStr.replace('$', '').replace(/\./g, '').replace(',', '.').trim();
-  return parseFloat(clean) || 0;
-}
+/* Facets inteligentes: solo se muestran si la base de datos tiene valores */
+const FACETS=[
+ {key:'categoria',   label:'Categoría'},
+ {key:'subcategoria',label:'Subcategoría'},
+ {key:'familia',     label:'Familia / Tipo'},
+ {key:'marca',       label:'Marca'},
+ {key:'color',       label:'Color'},
+ {key:'talle',       label:'Talle / Tamaño'},
+ {key:'marcaMoto',   label:'Marca de Moto'},
+ {key:'modeloMoto',  label:'Modelo de Moto'},
+ {key:'rodado',      label:'Rodado'},
+ {key:'medida',      label:'Medida'},
+ {key:'terreno',     label:'Terreno'},
+ {key:'material',    label:'Material'},
+ {key:'tipoCubierta',label:'Tipo de Cubierta'},
+ {key:'tipoFiltro',  label:'Tipo de Filtro'},
+ {key:'uso',         label:'Uso'},
+ {key:'publico',     label:'Público'}
+];
+FACETS.forEach(f=>state.filters[f.key]=new Set());
 
-// Cargar productos desde Google Sheets
-async function loadProducts() {
-  try {
-    const response = await fetch('https://docs.google.com/spreadsheets/d/1U24EVKy05DUCElXnJ-9yW7VTT8DAwB_3Nu2VZXqOKYI/export?format=csv');
-    const csvData = await response.text();
-    
-    // Parsear CSV
-    const rows = csvData.split('\n');
-    const headers = rows[0].split(',').map(h => h.trim());
-    
-    allProducts = [];
-    
-    for (let i = 1; i < rows.length; i++) {
-      if (!rows[i].trim()) continue;
-      
-      const values = parseCSVRow(rows[i]);
-      if (values.length < headers.length) continue;
-      
-      const product = {
-        categoria: values[0] || '',
-        subcategoria: values[1] || '',
-        marca: values[2] || '',
-        codigo: values[3] || '',
-        nombre: values[4] || '',
-        precio: parsePrice(values[5]),
-        stock: parseInt(values[6]) || 0,
-        imagen: values[7] || ''
-      };
-      
-      if (product.nombre && product.codigo) {
-        allProducts.push(product);
-      }
-    }
-    
-    filteredProducts = [...allProducts];
-    initializeFilters();
-    renderProducts();
-    renderCategories();
-    
-  } catch (error) {
-    console.error('Error cargando productos:', error);
-    document.getElementById('products').innerHTML = '<div class="no-results">Error al cargar productos. Por favor recarga la página.</div>';
-  }
-}
+const money=n=>n.toLocaleString("es-AR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const clean=v=>{v=(v||'').trim();return (!v||v.toLowerCase()==='nan'||v==='-')?'':v};
+const parsePrice=s=>{s=(s||'').replace(/[^0-9,.-]/g,'');if(!s)return 0;return parseFloat(s.replace(/\./g,'').replace(',','.'))||0};
 
-// Parsear fila CSV manejando comas dentro de comillas
-function parseCSVRow(row) {
-  const result = [];
-  let current = '';
-  let inQuotes = false;
-  
-  for (let i = 0; i < row.length; i++) {
-    const char = row[i];
-    
-    if (char === '"') {
-      inQuotes = !inQuotes;
-    } else if (char === ',' && !inQuotes) {
-      result.push(current.trim());
-      current = '';
-    } else {
-      current += char;
-    }
-  }
-  
-  result.push(current.trim());
-  return result;
-}
+/* ================= CARGA DE DATOS (mapeo por nombre de columna = sin errores) ================= */
+async function loadProducts(){
+ try{
+  const res=await fetch(SHEET_URL);
+  const csv=await res.text();
+  const rows=parseCSV(csv);
+  if(!rows.length)return;
+  const header=rows[0].map(h=>h.trim().toUpperCase());
+  const idx=name=>header.indexOf(name);
+  const cols={};
+  ['CATEGORIA','SUBCATEGORIA','PRODUCTO','MARCAS','CODIGO','DESCRIPCION','PRECIO','STOCK','IMAGEN','FAMILIA_PRODUCTO','APLICACION_MODELO','TALLE','COLOR','TERRENO','POSICION','RODADO','MEDIDA','TIPO_CUBIERTA','CONSTRUCCION_TUBO','INDICE_CARGA_VELOCIDAD','PASO_CADENA','DIENTES_ESLABONES','VISCOSIDAD','VOLUMEN','MARCA_MOTO_APLICACION','MODELO_MOTO_APLICACION','AÑO_DESDE','AÑO_HASTA','MATERIAL','CAPACIDAD_LITROS','TIPO_LUBRICANTE','TIPO_FILTRO','TIPO_FRENO','TIPO_EQUIPAJE','PUBLICO','TIPO_CASCO','USO','MODELO_ANTIPARRA','TIPO_PRODUCTO','COMPAT_MARCA_MOTO','COMPAT_MODELO_MOTO']
+   .forEach(n=>cols[n]=idx(n));
+  const g=(row,name)=>cols[name]>=0?clean(row[cols[name]]):'';
 
-// Inicializar filtros
-function initializeFilters() {
-  const categories = [...new Set(allProducts.map(p => p.categoria).filter(c => c))];
-  const brands = [...new Set(allProducts.map(p => p.marca).filter(m => m))];
-  
-  const categoryFilter = document.getElementById('categoryFilter');
-  categories.sort().forEach(cat => {
-    const option = document.createElement('option');
-    option.value = cat;
-    option.textContent = cat;
-    categoryFilter.appendChild(option);
-  });
-  
-  const brandFilter = document.getElementById('brandFilter');
-  brands.sort().forEach(brand => {
-    const option = document.createElement('option');
-    option.value = brand;
-    option.textContent = brand;
-    brandFilter.appendChild(option);
-  });
-  
-  // Crear menú de navegación
-  const navMenu = document.getElementById('navMenu');
-  categories.forEach(cat => {
-    const link = document.createElement('a');
-    link.textContent = cat;
-    link.href = '#';
-    link.onclick = (e) => {
-      e.preventDefault();
-      document.getElementById('categoryFilter').value = cat;
-      filterProducts();
-      updateNavActive(link);
+  allProducts=rows.slice(1).map(row=>{
+    if(!row||row.length<header.length-2)return null;
+    const p={
+      categoria:g(row,'CATEGORIA'),subcategoria:g(row,'SUBCATEGORIA'),producto:g(row,'PRODUCTO'),
+      marca:g(row,'MARCAS'),codigo:g(row,'CODIGO'),descripcion:g(row,'DESCRIPCION'),
+      precio:parsePrice(g(row,'PRECIO')),stock:parseInt(g(row,'STOCK'))||0,imagen:g(row,'IMAGEN'),
+      familia:g(row,'FAMILIA_PRODUCTO')||g(row,'TIPO_PRODUCTO'),aplicacion:g(row,'APLICACION_MODELO'),
+      talle:g(row,'TALLE'),color:g(row,'COLOR'),terreno:g(row,'TERRENO'),posicion:g(row,'POSICION'),
+      rodado:g(row,'RODADO'),medida:g(row,'MEDIDA'),tipoCubierta:g(row,'TIPO_CUBIERTA'),
+      construccion:g(row,'CONSTRUCCION_TUBO'),indice:g(row,'INDICE_CARGA_VELOCIDAD'),
+      pasoCadena:g(row,'PASO_CADENA'),dientes:g(row,'DIENTES_ESLABONES'),viscosidad:g(row,'VISCOSIDAD'),
+      volumen:g(row,'VOLUMEN'),material:g(row,'MATERIAL'),capacidad:g(row,'CAPACIDAD_LITROS'),
+      tipoLubricante:g(row,'TIPO_LUBRICANTE'),tipoFiltro:g(row,'TIPO_FILTRO'),tipoFreno:g(row,'TIPO_FRENO'),
+      tipoEquipaje:g(row,'TIPO_EQUIPAJE'),publico:g(row,'PUBLICO'),tipoCasco:g(row,'TIPO_CASCO'),
+      uso:g(row,'USO'),modeloAntiparra:g(row,'MODELO_ANTIPARRA'),tipoProducto:g(row,'TIPO_PRODUCTO'),
+      marcaMoto:g(row,'MARCA_MOTO_APLICACION')||g(row,'COMPAT_MARCA_MOTO'),
+      modeloMoto:g(row,'MODELO_MOTO_APLICACION')||g(row,'COMPAT_MODELO_MOTO'),
+      añoDesde:g(row,'AÑO_DESDE'),añoHasta:g(row,'AÑO_HASTA')
     };
-    navMenu.appendChild(link);
-  });
-}
-
-// Actualizar estado activo en navegación
-function updateNavActive(activeLink) {
-  document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
-  activeLink.classList.add('active');
-}
-
-// Mostrar todos los productos
-function showAll(event) {
-  event.preventDefault();
-  document.getElementById('categoryFilter').value = '';
-  document.getElementById('subcategoryFilter').value = '';
-  filterProducts();
-  updateNavActive(event.target);
-}
-
-// Renderizar categorías principales
-function renderCategories() {
-  const categories = [...new Set(allProducts.map(p => p.categoria).filter(c => c))];
-  const grid = document.getElementById('categoryGrid');
-  
-  grid.innerHTML = categories.map(cat => 
-    `<div class="cat" onclick="filterByCategory('${cat}')">${cat}</div>`
-  ).join('');
-}
-
-// Filtrar por categoría
-function filterByCategory(category) {
-  document.getElementById('categoryFilter').value = category;
-  filterProducts();
-}
-
-// Filtrar productos
-function filterProducts() {
-  const searchTerm = document.getElementById('search').value.toLowerCase().trim();
-  const category = document.getElementById('categoryFilter').value;
-  const subcategory = document.getElementById('subcategoryFilter').value;
-  const brand = document.getElementById('brandFilter').value;
-  const stockFilter = document.getElementById('stockFilter').value;
-  
-  filteredProducts = allProducts.filter(p => {
-    // Búsqueda de texto
-    if (searchTerm) {
-      const searchFields = [
-        p.nombre,
-        p.codigo,
-        p.marca,
-        p.categoria,
-        p.subcategoria
-      ].join(' ').toLowerCase();
-      
-      if (!searchFields.includes(searchTerm)) return false;
-    }
-    
-    // Filtros
-    if (category && p.categoria !== category) return false;
-    if (subcategory && p.subcategoria !== subcategory) return false;
-    if (brand && p.marca !== brand) return false;
-    
-    // Filtro de stock
-    if (stockFilter === 'in' && p.stock <= 0) return false;
-    if (stockFilter === 'low' && (p.stock <= 0 || p.stock > 5)) return false;
-    if (stockFilter === 'out' && p.stock > 0) return false;
-    
-    return true;
-  });
-  
-  // Actualizar subcategorías según categoría seleccionada
-  updateSubcategories();
-  
-  renderProducts();
-}
-
-// Actualizar subcategorías
-function updateSubcategories() {
-  const category = document.getElementById('categoryFilter').value;
-  const subcategoryFilter = document.getElementById('subcategoryFilter');
-  
-  let subcategories = [];
-  if (category) {
-    subcategories = [...new Set(
-      allProducts
-        .filter(p => p.categoria === category)
-        .map(p => p.subcategoria)
-        .filter(s => s)
-    )];
-  } else {
-    subcategories = [...new Set(allProducts.map(p => p.subcategoria).filter(s => s))];
-  }
-  
-  subcategoryFilter.innerHTML = '<option value="">Todas las subcategorías</option>';
-  subcategories.sort().forEach(sub => {
-    const option = document.createElement('option');
-    option.value = sub;
-    option.textContent = sub;
-    subcategoryFilter.appendChild(option);
-  });
-}
-
-// Renderizar productos
-function renderProducts() {
-  const container = document.getElementById('products');
-  const countEl = document.getElementById('productCount');
-  
-  if (filteredProducts.length === 0) {
-    container.innerHTML = '<div class="no-results">No se encontraron productos que coincidan con tu búsqueda.</div>';
-    countEl.textContent = '0 productos';
-    return;
-  }
-  
-  countEl.textContent = `${filteredProducts.length} productos`;
-  
-  container.innerHTML = filteredProducts.map((p, i) => {
-    const stockClass = p.stock === 0 ? 'out-of-stock' : (p.stock <= 5 ? 'low' : '');
-    const stockText = p.stock === 0 ? 'SIN STOCK' : (p.stock <= 5 ? `¡Solo ${p.stock} disponibles!` : `Stock: ${p.stock}`);
-    
-    return `
-      <article class="product">
-        ${p.stock === 0 ? '<span class="out-of-stock">SIN STOCK</span>' : ''}
-        <div class="product-image">
-          <img src="${p.imagen || 'https://via.placeholder.com/200x145?text=Sin+Imagen'}" 
-               alt="${p.nombre}" 
-               onerror="this.src='https://via.placeholder.com/200x145?text=Sin+Imagen'">
-        </div>
-        <div class="product-category">${p.categoria} > ${p.subcategoria}</div>
-        <h3>${p.nombre}</h3>
-        <div class="brand-tag">${p.marca}</div>
-        <div class="code">Código: ${p.codigo}</div>
-        <div class="stock-info ${stockClass}">${stockText}</div>
-        <div class="price">$ ${money(p.precio)}</div>
-        ${p.stock > 0 ? `
-          <div class="qty">
-            <input id="q${i}" value="1" type="number" min="1" max="${p.stock}">
-            <button onclick="changeQty('q${i}',1)">▲</button>
-            <button onclick="changeQty('q${i}',-1)">▼</button>
-          </div>
-          <button class="buy" onclick="addToCart(${i})">
-            <i class="fas fa-shopping-cart"></i> COMPRAR
-          </button>
-        ` : `
-          <button class="buy out" disabled>SIN STOCK</button>
-        `}
-        <div class="tax">Precio con IVA incluido</div>
-      </article>
-    `;
-  }).join('');
-}
-
-// Cambiar cantidad
-function changeQty(id, delta) {
-  const input = document.getElementById(id);
-  const max = parseInt(input.max) || 999;
-  const newVal = Math.max(1, Math.min(max, Number(input.value) + delta));
-  input.value = newVal;
-}
-
-// Agregar al carrito
-function addToCart(index) {
-  const product = filteredProducts[index];
-  const qtyInput = document.getElementById(`q${index}`);
-  const qty = parseInt(qtyInput.value) || 1;
-  
-  const existingItem = cart.find(item => item.codigo === product.codigo);
-  
-  if (existingItem) {
-    existingItem.qty += qty;
-  } else {
-    cart.push({
-      ...product,
-      qty: qty
+    if(!p.producto&&!p.codigo)return null;
+    /* valores multi-valor (modelos separados por coma) */
+    p.facetVals={};
+    FACETS.forEach(f=>{
+      if(f.key==='modeloMoto'){p.facetVals[f.key]=p.modeloMoto.split(/[,;]/).map(s=>s.trim()).filter(Boolean);}
+      else{p.facetVals[f.key]=p[f.key]?[p[f.key]]:[];}
     });
+    /* índice de búsqueda inteligente: todo el conocimiento del producto */
+    p.searchText=[p.producto,p.descripcion,p.codigo,p.marca,p.categoria,p.subcategoria,p.familia,
+      p.aplicacion,p.color,p.talle,p.terreno,p.posicion,p.rodado,p.medida,p.tipoCubierta,p.material,
+      p.marcaMoto,p.modeloMoto,p.tipoProducto,p.tipoFiltro,p.uso,p.publico,p.tipoEquipaje,p.tipoCasco,
+      p.viscosidad,p.capacidad,p.añoDesde,p.añoHasta].join(' ').toLowerCase();
+    return p;
+  }).filter(Boolean);
+
+  buildNav();buildMarquee();applyState();
+ }catch(e){
+  console.error(e);
+  document.getElementById('products').innerHTML='<div class="no-results">Error al cargar la base de datos. Verificá que la hoja esté compartida como "cualquiera con el link" y recargá.</div>';
+ }
+}
+
+function parseCSV(text){
+ const rows=[];let row=[],cur='',q=false;
+ for(let i=0;i<text.length;i++){
+  const c=text[i];
+  if(q){
+   if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else q=false; }
+   else cur+=c;
+  }else{
+   if(c==='"')q=true;
+   else if(c===','){row.push(cur);cur='';}
+   else if(c==='\n'){row.push(cur);rows.push(row);row=[];cur='';}
+   else if(c!=='\r')cur+=c;
   }
-  
-  renderCart();
-  document.getElementById('cart').classList.add('open');
-  document.getElementById('overlay').classList.add('active');
+ }
+ if(cur||row.length){row.push(cur);rows.push(row);}
+ return rows.filter(r=>r.some(c=>c.trim()!==''));
 }
 
-// Renderizar carrito
-function renderCart() {
-  document.getElementById('cartCount').textContent = cart.reduce((sum, item) => sum + item.qty, 0);
-  
-  const itemsContainer = document.getElementById('cartItems');
-  const totalEl = document.getElementById('total');
-  const checkoutBtn = document.getElementById('checkoutBtn');
-  
-  if (cart.length === 0) {
-    itemsContainer.innerHTML = '<div class="empty-cart"><i class="fas fa-shopping-cart" style="font-size:48px;margin-bottom:15px;color:#ddd"></i><p>Tu carrito está vacío</p></div>';
-    totalEl.textContent = '0';
-    checkoutBtn.disabled = true;
-    document.getElementById('checkoutForm').classList.remove('active');
-    return;
+/* ================= MOTOR DE FILTRADO (OR dentro del facet, AND entre facets) ================= */
+function matchesSearch(p,kws){return kws.every(k=>p.searchText.includes(k))}
+function matchesFacets(p,exceptKey){
+ for(const f of FACETS){
+  if(f.key===exceptKey)continue;
+  const set=state.filters[f.key];
+  if(set.size){
+   const vals=p.facetVals[f.key].map(v=>v.toLowerCase());
+   if(![...set].some(v=>vals.includes(v.toLowerCase())))return false;
   }
-  
-  checkoutBtn.disabled = false;
-  
-  itemsContainer.innerHTML = cart.map((item, i) => `
-    <div class="cart-item">
-      <img src="${item.imagen || 'https://via.placeholder.com/60x60?text=IMG'}" 
-           alt="${item.nombre}"
-           onerror="this.src='https://via.placeholder.com/60x60?text=IMG'">
-      <div class="cart-item-info">
-        <b>${item.nombre}</b>
-        <div style="color:#777;font-size:11px">${item.codigo} - ${item.marca}</div>
-        <div style="color:var(--green);font-weight:700;margin-top:3px">$ ${money(item.precio)}</div>
-        <div class="cart-item-controls">
-          <div class="cart-item-qty">
-            <button onclick="updateCartQty(${i},-1)">−</button>
-            <input type="number" value="${item.qty}" min="1" 
-                   onchange="setCartQty(${i},this.value)">
-            <button onclick="updateCartQty(${i},1)">+</button>
-          </div>
-          <button class="remove-btn" onclick="removeFromCart(${i})">
-            <i class="fas fa-trash"></i>
-          </button>
-        </div>
-      </div>
-      <div style="font-weight:700">$ ${money(item.precio * item.qty)}</div>
-    </div>
-  `).join('');
-  
-  const total = cart.reduce((sum, item) => sum + (item.precio * item.qty), 0);
-  totalEl.textContent = money(total);
+ }
+ return true;
+}
+function computeFiltered(){
+ const kws=state.search.toLowerCase().split(/\s+/).filter(Boolean);
+ return allProducts.filter(p=>matchesSearch(p,kws)&&matchesFacets(p,null));
+}
+/* opciones de un facet calculadas sobre el resto de filtros activos (facet counting real) */
+function facetOptions(key){
+ const kws=state.search.toLowerCase().split(/\s+/).filter(Boolean);
+ const counts={};
+ allProducts.forEach(p=>{
+  if(!matchesSearch(p,kws)||!matchesFacets(p,key))return;
+  p.facetVals[key].forEach(v=>{const k=v.toUpperCase();counts[k]=counts[k]||{v,c:0};counts[k].c++;});
+ });
+ return Object.values(counts).sort((a,b)=>b.c-a.c||a.v.localeCompare(b.v));
 }
 
-// Actualizar cantidad en carrito
-function updateCartQty(index, delta) {
-  cart[index].qty = Math.max(1, cart[index].qty + delta);
-  renderCart();
+/* ================= RENDER GENERAL ================= */
+function applyState(){
+ filteredProducts=computeFiltered();
+ renderProducts();renderFacets();renderActiveTags();renderRecommended();
+ if(state.megaCat)renderMega(state.megaCat);
+ document.getElementById('productCount').textContent=`${filteredProducts.length} producto${filteredProducts.length===1?'':'s'} encontrado${filteredProducts.length===1?'':'s'}`;
 }
 
-// Establecer cantidad en carrito
-function setCartQty(index, value) {
-  const qty = Math.max(1, parseInt(value) || 1);
-  cart[index].qty = qty;
-  renderCart();
+/* ---- tarjetas de producto (reutilizada en grilla principal y recomendados) ---- */
+function productCard(p,prefix,i){
+ const attrs=[p.color,p.talle,p.medida,p.rodado?('R'+p.rodado):'',p.terreno,p.viscosidad].filter(Boolean).slice(0,4);
+ const stockTxt=p.stock===0?'SIN STOCK':(p.stock<=5?`¡Solo ${p.stock} disponibles!`:`Stock: ${p.stock}`);
+ const img=p.imagen?(IMG_BASE+p.imagen):'';
+ return `<article class="product">
+  ${p.stock===0?'<span class="out-of-stock">SIN STOCK</span>':(p.stock>0&&p.stock<=10?'<span class="new-tag">NUEVO</span>':'')}
+  <div class="product-image"><img loading="lazy" src="${img||'https://via.placeholder.com/200x145?text=FC+RACING'}" alt="${p.producto}" onerror="this.src='https://via.placeholder.com/200x145?text=FC+RACING'"></div>
+  <div class="product-category">${p.categoria} › ${p.subcategoria}</div>
+  <h3>${p.descripcion||p.producto}</h3>
+  <div class="brand-tag">${p.marca}</div>
+  ${attrs.length?`<div class="product-attrs">${attrs.map(a=>`<span class="product-attr">${a}</span>`).join('')}</div>`:''}
+  <div class="code">Código: ${p.codigo}</div>
+  ${p.marcaMoto?`<div style="font-size:9px;color:var(--muted);margin-bottom:4px"><i class="fas fa-motorcycle"></i> ${p.marcaMoto} ${p.modeloMoto} ${p.añoDesde?(p.añoDesde+'-'+(p.añoHasta||'')):''}</div>`:''}
+  <div class="stock-info ${p.stock<=5?'low':''}">${stockTxt}</div>
+  <div class="price">$ ${money(p.precio)}</div>
+  ${p.stock>0?`
+   <div class="qty"><input id="${prefix}q${i}" value="1" type="number" min="1" max="${p.stock}">
+   <button onclick="changeQty('${prefix}q${i}',1)">▲</button><button onclick="changeQty('${prefix}q${i}',-1)">▼</button></div>
+   <button class="buy" onclick="addToCartByCode('${p.codigo.replace(/'/g,"\\'")}','${prefix}q${i}')"><i class="fas fa-shopping-cart"></i> COMPRAR</button>`
+  :`<button class="buy out" disabled>SIN STOCK</button>`}
+  <div class="tax">c/iva</div>
+ </article>`;
+}
+function renderProducts(){
+ const el=document.getElementById('products');
+ el.innerHTML=filteredProducts.length?filteredProducts.map((p,i)=>productCard(p,'m',i)).join('')
+  :'<div class="no-results">No se encontraron productos.<br>Probá con otras palabras o quitá filtros.</div>';
 }
 
-// Eliminar del carrito
-function removeFromCart(index) {
-  cart.splice(index, 1);
-  renderCart();
+/* ---- panel lateral de facets (formato lista con checkboxes, solo los necesarios) ---- */
+function renderFacets(){
+ const cont=document.getElementById('facetContainer');
+ let html='';
+ FACETS.forEach(f=>{
+  const opts=facetOptions(f.key);
+  if(opts.length<2)return;                       /* no muestra filtros vacíos o sin sentido */
+  const sel=state.filters[f.key];
+  const collapsed=state.collapsed[f.key]?'collapsed':'';
+  const expanded=state.expanded[f.key];
+  const shown=expanded?opts:opts.slice(0,8);
+  html+=`<div class="facet-group ${collapsed}">
+   <div class="facet-title" onclick="toggleCollapse('${f.key}')">${f.label} <i class="fas fa-chevron-down"></i></div>
+   <div class="facet-list ${opts.length>8?'scroll':''}">
+    ${shown.map(o=>`<label class="facet-item">
+      <input type="checkbox" ${sel.has(o.v)?'checked':''} onchange="toggleFacet('${f.key}','${o.v.replace(/'/g,"\\')"}')">
+      <span title="${o.v}">${o.v}</span><em class="facet-count">${o.c}</em></label>`).join('')}
+   </div>
+   ${opts.length>8?`<button class="facet-more" onclick="toggleExpand('${f.key}')">${expanded?'Ver menos':'Ver más ('+opts.length+')'}</button>`:''}
+  </div>`;
+ });
+ cont.innerHTML=html||'<p style="font-size:12px;color:#999">Sin filtros disponibles.</p>';
+}
+function toggleCollapse(k){state.collapsed[k]=!state.collapsed[k];renderFacets()}
+function toggleExpand(k){state.expanded[k]=!state.expanded[k];renderFacets()}
+function toggleFacet(key,value){
+ const set=state.filters[key];
+ set.has(value)?set.delete(value):set.add(value);
+ applyState();
+}
+function clearAllFilters(){
+ FACETS.forEach(f=>state.filters[f.key].clear());
+ state.search='';document.getElementById('search').value='';document.getElementById('sideSearch').value='';
+ state.megaCat=null;closeMega();syncNavActive('');
+ applyState();
 }
 
-// Mostrar formulario de checkout
-function showCheckoutForm() {
-  document.getElementById('checkoutForm').classList.add('active');
-  document.getElementById('checkoutBtn').style.display = 'none';
+/* ---- tags de filtros activos ---- */
+function renderActiveTags(){
+ const el=document.getElementById('activeFilters');let html='';
+ FACETS.forEach(f=>state.filters[f.key].forEach(v=>{
+  html+=`<span class="active-filter-tag">${f.label}: ${v}<button onclick="toggleFacet('${f.key}','${v.replace(/'/g,"\\')"}')">×</button></span>`;
+ }));
+ if(state.search)html+=`<span class="active-filter-tag">Búsqueda: "${state.search}"<button onclick="clearSearch()">×</button></span>`;
+ el.innerHTML=html;
 }
+function clearSearch(){state.search='';document.getElementById('search').value='';document.getElementById('sideSearch').value='';applyState()}
 
-// Completar compra
-function completePurchase() {
-  const name = document.getElementById('customerName').value.trim();
-  const city = document.getElementById('customerCity').value.trim();
-  const address = document.getElementById('customerAddress').value.trim();
-  const paymentMethod = document.getElementById('paymentMethod').value;
-  
-  if (!name || !city || !address || !paymentMethod) {
-    alert('Por favor completa todos los campos del formulario');
-    return;
-  }
-  
-  const total = cart.reduce((sum, item) => sum + (item.precio * item.qty), 0);
-  
-  let message = `*NUEVO PEDIDO - FC RACING*\n\n`;
-  message += `*Datos del Cliente:*\n`;
-  message += `• Nombre: ${name}\n`;
-  message += `• Ciudad: ${city}\n`;
-  message += `• Dirección: ${address}\n`;
-  message += `• Método de pago: ${paymentMethod.toUpperCase()}\n\n`;
-  message += `*Productos:*\n`;
-  
-  cart.forEach((item, i) => {
-    message += `\n${i + 1}. ${item.nombre}\n`;
-    message += `   Código: ${item.codigo}\n`;
-    message += `   Marca: ${item.marca}\n`;
-    message += `   Cantidad: ${item.qty}\n`;
-    message += `   Precio unitario: $${money(item.precio)}\n`;
-    message += `   Subtotal: $${money(item.precio * item.qty)}\n`;
-  });
-  
-  message += `\n*TOTAL: $${money(total)}*\n\n`;
-  message += `Enviado desde el sitio web de FC Racing`;
-  
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  window.open(whatsappUrl, '_blank');
-  
-  // Limpiar carrito
-  cart = [];
-  renderCart();
-  toggleCart();
-  
-  // Limpiar formulario
-  document.getElementById('customerName').value = '';
-  document.getElementById('customerCity').value = '';
-  document.getElementById('customerAddress').value = '';
-  document.getElementById('paymentMethod').value = '';
-  document.getElementById('checkoutForm').classList.remove('active');
-  document.getElementById('checkoutBtn').style.display = 'block';
-  
-  alert('¡Pedido enviado! Te contactaremos por WhatsApp para confirmar tu compra.');
+/* ================= NAV SUPERIOR CON MENÚ DESPLEGABLE ================= */
+function buildNav(){
+ const cats=[...new Set(allProducts.map(p=>p.categoria).filter(Boolean))].sort();
+ const nav=document.getElementById('navMenu');
+ nav.innerHTML=`<a href="#tienda" class="active" data-cat="" onclick="navClick(event,this,'')">TODOS</a>`+
+  cats.map(c=>`<a href="#tienda" data-cat="${c}" onclick="navClick(event,this,'${c.replace(/'/g,"\\')"}')">${c} <span class="caret">▼</span></a>`).join('');
 }
-
-// Toggle carrito
-function toggleCart() {
-  const cart = document.getElementById('cart');
-  const overlay = document.getElementById('overlay');
-  cart.classList.toggle('open');
-  overlay.classList.toggle('active');
+function syncNavActive(cat){
+ document.querySelectorAll('#navMenu a').forEach(a=>a.classList.toggle('active',a.dataset.cat===cat));
 }
-
-// Event listeners
-document.getElementById('search').addEventListener('keyup', e => {
-  if (e.key === 'Enter') filterProducts();
-  if (e.target.value === '') filterProducts();
+function navClick(e,el,cat){
+ e.preventDefault();
+ syncNavActive(cat);
+ FACETS.forEach(f=>{if(f.key!=='categoria')state.filters[f.key].clear()});
+ state.filters.categoria.clear();
+ if(cat){state.filters.categoria.add(cat);state.megaCat=cat;renderMega(cat);document.getElementById('megaMenu').classList.add('open');}
+ else{state.megaCat=null;closeMega();}
+ applyState();
+}
+function closeMega(){document.getElementById('megaMenu').classList.remove('open')}
+/* desplegable: subcategorías + atributos + marcas SOLO los que existen en esa categoría, en tarjetitas con tilde */
+function renderMega(cat){
+ const base=allProducts.filter(p=>p.categoria===cat);
+ const groups=[{key:'subcategoria',label:'Subcategorías'}];
+ FACETS.forEach(f=>{if(f.key!=='categoria'&&f.key!=='subcategoria')groups.push(f)});
+ let html=`<div class="mega-inner">
+  <div class="mega-head"><h3>${cat} — refiná tu búsqueda</h3><button onclick="closeMega()">×</button></div>`;
+ groups.forEach(g=>{
+  const counts={};
+  base.forEach(p=>p.facetVals[g.key].forEach(v=>{counts[v]=counts[v]||{v,c:0};counts[v].c++}));
+  const opts=Object.values(counts).sort((a,b)=>b.c-a.c).slice(0,24);
+  if(opts.length<2)return;                      /* solo filtros que interesan */
+  const sel=state.filters[g.key];
+  html+=`<div class="mega-group"><h4>${g.label}</h4><div class="mega-tiles">
+   ${opts.map(o=>`<label class="mega-tile ${sel.has(o.v)?'checked':''}">
+     <input type="checkbox" ${sel.has(o.v)?'checked':''} onchange="toggleFacet('${g.key}','${o.v.replace(/'/g,"\\')"}');this.closest('.mega-tile').classList.toggle('checked',this.checked)">
+     ${o.v}<span class="tcount">(${o.c})</span></label>`).join('')}
+  </div></div>`;
+ });
+ html+=`</div>`;
+ document.getElementById('megaMenu').innerHTML=html;
+}
+document.addEventListener('click',e=>{
+ if(!e.closest('#mainNav'))closeMega();
+ if(!e.closest('.search'))document.getElementById('searchSuggestions').classList.remove('active');
 });
 
-document.getElementById('search').addEventListener('input', e => {
-  if (e.target.value.length > 2) {
-    clearTimeout(window.searchTimeout);
-    window.searchTimeout = setTimeout(filterProducts, 300);
-  }
-});
+/* ================= BUSCADOR INTELIGENTE CON SUGERENCIAS ================= */
+function performSearch(){
+ state.search=document.getElementById('search').value.trim();
+ document.getElementById('sideSearch').value=state.search;
+ document.getElementById('searchSuggestions').classList.remove('active');
+ applyState();
+}
+function showSearchSuggestions(){
+ const q=document.getElementById('search').value.toLowerCase().trim();
+ const box=document.getElementById('searchSuggestions');
+ if(q.length<2){box.classList.remove('active');return}
+ const kws=q.split(/\s+/);
+ /* sugerencias por tipo: código, producto, marca, categoría, modelo */
+ const out=[];
+ const push=(type,label,meta,code)=>{if(out.length<9&&!out.some(o=>o.label===label))out.push({type,label,meta,code})};
+ allProducts.forEach(p=>{
+  if(!kws.every(k=>p.searchText.includes(k)))return;
+  if(p.codigo.toLowerCase().includes(q))push('CÓDIGO',p.codigo,p.descripcion||p.producto,p.codigo);
+  push('PRODUCTO',p.descripcion||p.producto,`${p.marca} · $${money(p.precio)}`,p.codigo);
+ });
+ [...new Set(allProducts.filter(p=>kws.every(k=>p.searchText.includes(k))).map(p=>p.marca))].slice(0,3)
+  .forEach(m=>push('MARCA',m,'Ver productos de '+m,''));
+ if(!out.length){box.innerHTML='<div class="suggestion-item"><div class="suggestion-title">Sin resultados para "'+q+'"</div></div>';box.classList.add('active');return}
+ box.innerHTML=out.map(o=>`<div class="suggestion-item" onclick="pickSuggestion('${o.code.replace(/'/g,"\\')"}','${o.type}')">
+   <div class="suggestion-title"><span class="suggestion-type">${o.type}</span>${o.label}</div>
+   <div class="suggestion-meta">${o.meta}</div></div>`).join('');
+ box.classList.add('active');
+}
+function pickSuggestion(code,type){
+ document.getElementById('searchSuggestions').classList.remove('active');
+ if(type==='MARCA'){state.filters.marca.clear();state.filters.marca.add(code);applyState();return}
+ if(code){state.search='';document.getElementById('search').value='';state.filters={};FACETS.forEach(f=>state.filters[f.key]=new Set());
+  filteredProducts=allProducts.filter(p=>p.codigo===code);
+  renderProducts();renderFacets();renderActiveTags();renderRecommended();
+  document.getElementById('productCount').textContent='1 producto';}
+}
 
-// Inicializar aplicación
-loadProducts();
-renderCart();
+/* ================= RECOMENDADOS / RELACIONADOS ================= */
+function renderRecommended(){
+ const view=filteredProducts.length?filteredProducts:allProducts;
+ const subs=new Set(),brands=new Set(),cats=new Set();
+ view.forEach(p=>{p.facetVals.subcategoria.forEach(v=>subs.add(v));brands.add(p.marca);cats.add(p.categoria)});
+ const inView=new Set(filteredProducts.map(p=>p.codigo));
+ let pool=allProducts.filter(p=>p.stock>0&&!inView.has(p.codigo));
+ let scored=pool.map(p=>{
+  let s=0;
+  p.facetVals.subcategoria.forEach(v=>{if(subs.has(v))s+=3});
+  if(brands.has(p.marca))s+=2;
+  if(cats.has(p.categoria))s+=1;
+  return{p,s};
+ }).filter(x=>x.s>0).sort((a,b)=>b.s-a.s||b.p.stock-a.p.stock);
+ if(scored.length<6){
+  const extra=pool.filter(p=>!scored.some(x=>x.p.codigo===p.codigo)).sort((a,b)=>b.stock-a.stock);
+  scored=scored.concat(extra.map(p=>({p,s:0})));
+ }
+ const list=scored.slice(0,8).map(x=>x.p);
+ document.getElementById('recommendedGrid').innerHTML=list.length?list.map((p,i)=>productCard(p,'r',i)).join(''):'';
+}
+
+/* ================= MARQUESINA DE MARCAS ================= */
+function buildMarquee(){
+ const logos=`
+  <div class="lg"><span class="lg-mitas">Mitas</span><span class="lg-sub">MOTORCYCLE TIRES</span></div>
+  <div class="lg"><span class="lg-mobius">mobius</span></div>
+  <div class="lg"><span class="lg-otras">OTRAS <b>MARCAS</b></span></div>
+  <div class="lg"><span class="lg-protaper">PROTAPER</span></div>
+  <div class="lg"><span class="lg-proteam">PRO<b>TEAM</b></span></div>
+  <div class="lg"><span class="lg-raba-icon"></span><span class="lg-raba">RABACONDA</span><span class="lg-sub">RIDER DEVELOPED DESIGNS</span></div>
+  <div class="lg"><span class="lg-gbs"><i>S</i>GBS</span><span class="lg-sub">moto parts</span></div>
+  <div class="lg"><span class="lg-hiflo">HIFLO<b>FILTRO</b></span><span class="lg-sub">PREMIUM FILTERS</span></div>
+  <div class="lg"><span class="lg-jado">JADO</span><span class="lg-sub">MOTO MULTIMEDIA SYSTEMS</span></div>
+  <div class="lg"><span class="lg-jt">JT</span><span class="lg-sub">SPROCKETS</span></div>
+  <div class="lg"><span class="lg-kewiq"><i>K</i>kewiq</span></div>
+  <div class="lg"><span class="lg-lucas">LUCAS OIL</span></div>
+  <div class="lg"><span class="lg-coo-icon"></span><span class="lg-coo">coocase</span></div>
+  <div class="lg"><span class="lg-diafrag">DIA-FRAG <i>◆</i></span></div>
+  <div class="lg"><span class="lg-excel">EXCEL</span><span class="lg-sub">Takasago Rim</span></div>`;
+ document.getElementById('marqueeTrack').innerHTML=`<div class="marquee-group">${logos}</div><div class="marquee-group">${logos}</div>`;
+}
+
+/* ================= SIDEBAR MÓVIL ================= */
+function openSidebar(){document.getElementById('filterSidebar').classList.add('open');document.getElementById('overlay').classList.add('active');document.getElementById('overlay').onclick=()=>{closeSidebar();document.getElementById('overlay').onclick=toggleCart}}
+function closeSidebar(){document.getElementById('filterSidebar').classList.remove('open');document.getElementById('overlay').classList.remove('active')}
+
+/* ================= CARRITO / CHECKOUT / WHATSAPP (sin cambios) ================= */
+function changeQty(id,delta){const x=document.getElementById(id);x.value=Math.max(1,Math.min(Number(x.max)||999,Number(x.value)+delta))}
+function addToCartByCode(code,qtyId){
+ const p=allProducts.find(x=>x.codigo===code);if(!p)return;
+ const qty=Math.max(1,parseInt(document.getElementById(qtyId)?.value)||1);
+ const ex=cart.find(i=>i.codigo===code);
+ ex?ex.qty+=qty:cart.push({...p,qty});
+ renderCart();document.getElementById('cart').classList.add('open');document.getElementById('overlay').classList.add('active');
+}
+function renderCart(){
+ document.getElementById('cartCount').textContent=cart.reduce((s,i)=>s+i.qty,0);
+ const items=document.getElementById('cartItems'),btn=document.getElementById('checkoutBtn');
+ if(!cart.length){items.innerHTML='<div class="empty-cart"><i class="fas fa-shopping-cart" style="font-size:48px;color:#ddd"></i><p>Tu carrito está vacío</p></div>';document.getElementById('total').textContent='0';btn.disabled=true;return}
+ btn.disabled=false;
+ items.innerHTML=cart.map((it,i)=>`<div class="cart-item">
+   <img src="${it.imagen?IMG_BASE+it.imagen:'https://via.placeholder.com/60x60?text=IMG'}" onerror="this.src='https://via.placeholder.com/60x60?text=IMG'">
+   <div class="cart-item-info"><b>${it.descripcion||it.producto}</b>
+    <div style="color:#777;font-size:11px">${it.codigo} · ${it.marca}</div>
+    <div style="color:var(--green);font-weight:700;margin-top:3px">$ ${money(it.precio)}</div>
+    <div class="cart-item-controls"><div class="cart-item-qty">
+      <button onclick="updateCartQty(${i},-1)">−</button><input type="number" value="${it.qty}" min="1" onchange="setCartQty(${i},this.value)">
+      <button onclick="updateCartQty(${i},1)">+</button></div>
+      <button class="remove-btn" onclick="removeFromCart(${i})"><i class="fas fa-trash"></i></button></div></div>
+   <div style="font-weight:700">$ ${money(it.precio*it.qty)}</div></div>`).join('');
+ document.getElementById('total').textContent=money(cart.reduce((s,i)=>s+i.precio*i.qty,0));
+}
+function updateCartQty(i,d){cart[i].qty=Math.max(1,cart[i].qty+d);renderCart()}
+function setCartQty(i,v){cart[i].qty=Math.max(1,parseInt(v)||1);renderCart}
+function removeFromCart(i){cart.splice(i,1);renderCart}
+function showCheckoutForm(){document.getElementById('checkoutForm').classList.add('active');document.getElementById('checkoutBtn').style.display='none'}
+function toggleCart(){document.getElementById('cart').classList.toggle('open');document.getElementById('overlay').classList.toggle('active')}
+function completePurchase(){
+ const name=document.getElementById('customerName').value.trim(),city=document.getElementById('customerCity').value.trim(),
+       addr=document.getElementById('customerAddress').value.trim(),pay=document.getElementById('paymentMethod').value;
+ if(!name||!city||!addr||!pay){alert('Por favor completá todos los campos del formulario');return}
+ const total=cart.reduce((s,i)=>s+i.precio*i.qty,0);
+ let msg=`*NUEVO PEDIDO - FC RACING*\n\n*Cliente:* ${name}\n*Ciudad:* ${city}\n*Dirección:* ${addr}\n*Pago:* ${pay.toUpperCase()}\n\n*PRODUCTOS:*\n`;
+ cart.forEach((it,i)=>{msg+=`\n${i+1}) ${it.descripcion||it.producto}\n   Cód: ${it.codigo} | ${it.marca}\n   Cant: ${it.qty} x $${money(it.precio)} = $${money(it.precio*it.qty)}\n`});
+ msg+=`\n*TOTAL: $${money(total)}*\n\nPedido generado desde la web FC Racing.`;
+ window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');
+ cart=[];renderCart();toggleCart();
+ ['customerName','customerCity','customerAddress'].forEach(id=>document.getElementById(id).value='');
+ document.getElementById('paymentMethod').value='';
+ document.getElementById('checkoutForm').classList.remove('active');
+ document.getElementById('checkoutBtn').style.display='block';
+}
+
+/* ================= EVENTOS ================= */
+document.getElementById('search').addEventListener('keyup',e=>{if(e.key==='Enter')performSearch();else{clearTimeout(window.t1);window.t1=setTimeout(showSearchSuggestions,220)}});
+document.getElementById('search').addEventListener('focus',showSearchSuggestions);
+document.getElementById('sideSearch').addEventListener('input',e=>{clearTimeout(window.t2);window.t2=setTimeout(()=>{state.search=e.target.value.trim();document.getElementById('search').value=state.search;applyState()},250)});
+document.getElementById('sideSearch').addEventListener('keyup',e=>{if(e.key==='Enter'){state.search=e.target.value.trim();document.getElementById('search').value=state.search;applyState()}});
+
+loadProducts();renderCart();
 </script>
 </body>
-</html>
+</html>>
