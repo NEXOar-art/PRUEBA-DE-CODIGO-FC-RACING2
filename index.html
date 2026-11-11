@@ -842,7 +842,7 @@ async function loadProducts(){
       /* Campos derivados para filtros y búsqueda */
       p.moto = p.compatMarca || p.marcaMoto;
       p.modeloMoto = p.compatModelo || p.modeloMotoApp;
-      p.anios = (p.anioDesde||p.compatDesde) ? `p.anioDesde||p.compatDesde-{p.anioHasta||p.compatHasta||''}` : (p.aniosDet||'');
+      p.anios = (p.anioDesde||p.compatDesde) ? `${p.anioDesde||p.compatDesde}-${p.anioHasta||p.compatHasta||''}` : (p.aniosDet||'');
 
       /* Índice de búsqueda: TODO (texto + códigos + taxonomía + atributos + compat + años) */
       p._idx=[
@@ -902,7 +902,7 @@ function buildSidebar(){
     const count=catCounts[cat]||0;
     if(!count)continue;
     const isActive=state.categoria===cat;
-    html+=`<li><a class="isActive?'active':''"onclick="toggleSidebarCat('{cat.replace(/'/g,"\\'")}',event)">cat<spanclass="cnt">{count}</span></a>`;
+    html+=`<li><a class="${isActive?'active':''}" onclick="toggleSidebarCat('${cat.replace(/'/g,"\\'")}',event)">${cat} <span class="cnt">${count}</span></a>`;
     const subs=TAXONOMY[cat];
     if(Object.keys(subs).length){
       html+=`<ul class="sidebar-sub ${isActive?'open':''}">`;
@@ -910,14 +910,14 @@ function buildSidebar(){
         const subCount=ALL.filter(p=>p.categoria===cat&&p.subcategoria===sub).length;
         if(!subCount)continue;
         const subActive=state.subcategoria===sub;
-        html+=`<li><a class="subActive?'active':''"onclick="toggleSidebarSub('{cat.replace(/'/g,"\\'")}','${sub.replace(/'/g,"\\'")}',event)">${sub} <span class="cnt">${subCount}</span></a>`;
+        html+=`<li><a class="${subActive?'active':''}" onclick="toggleSidebarSub('${cat.replace(/'/g,"\\'")}','${sub.replace(/'/g,"\\'")}',event)">${sub} <span class="cnt">${subCount}</span></a>`;
         const prods=subs[sub];
         if(prods&&prods.length&&subActive){
           html+=`<ul class="sidebar-sub open" style="padding-left:10px">`;
           for(const prod of prods){
             const pCount=ALL.filter(p=>p.categoria===cat&&p.subcategoria===sub&&p.producto===prod).length;
             if(!pCount)continue;
-            html+=`<li><a class="state.producto===prod?'active':''"onclick="toggleSidebarProd('{cat.replace(/'/g,"\\'")}','${sub.replace(/'/g,"\\'")}','${prod.replace(/'/g,"\\'")}',event)" style="font-size:10px">prod<spanclass="cnt">{pCount}</span></a></li>`;
+            html+=`<li><a class="${state.producto===prod?'active':''}" onclick="toggleSidebarProd('${cat.replace(/'/g,"\\'")}','${sub.replace(/'/g,"\\'")}','${prod.replace(/'/g,"\\'")}',event)" style="font-size:10px">${prod} <span class="cnt">${pCount}</span></a></li>`;
           }
           html+='</ul>';
         }
@@ -1073,14 +1073,14 @@ function buildSmartFilters(){
   container.innerHTML=fHTML;
   tagsContainer.innerHTML=tHTML;
 }
-function mkTag(l,v,k){return `<span class="tag">${l}: v<buttononclick="setFilter('{k}',null)">×</button></span>`;}
+function mkTag(l,v,k){return `<span class="tag">${l}: ${v} <button onclick="setFilter('${k}',null)">×</button></span>`;}
 function buildFG(label,key,opts,active){
   const sorted=Object.entries(opts).sort((a,b)=>b[1]-a[1]);
   if(!sorted.length&&!active)return '';
-  let h=`<div class="sf-group"><button class="sf-btn active?'active':''"onclick="togglePanel(this)">{active?label+': '+active:label} <i class="fas fa-chevron-down"></i></button><div class="sf-panel"><div class="sf-option !active?'selected':''"onclick="setFilter('{key}',null)">Todos</div>`;
+  let h=`<div class="sf-group"><button class="sf-btn ${active?'active':''}" onclick="togglePanel(this)">${active?label+': '+active:label} <i class="fas fa-chevron-down"></i></button><div class="sf-panel"><div class="sf-option ${!active?'selected':''}" onclick="setFilter('${key}',null)">Todos</div>`;
   sorted.slice(0,30).forEach(([val,cnt])=>{
     const escaped=val.replace(/'/g,"\\'").replace(/`/g,'').replace(/\\/g,'');
-    h+=`<div class="sf-option active===val?'selected':''"onclick="setFilter('{key}','escaped')">{val} <span class="cnt">${cnt}</span></div>`;
+    h+=`<div class="sf-option ${active===val?'selected':''}" onclick="setFilter('${key}','${escaped}')">${val} <span class="cnt">${cnt}</span></div>`;
   });
   return h+'</div></div>';
 }
@@ -1123,7 +1123,7 @@ function renderTitle(){
   else if(state.subcategoria)el.textContent=state.subcategoria;
   else if(state.categoria)el.textContent=state.categoria;
   else el.textContent='NUESTROS PRODUCTOS';
-  cnt.textContent=`filtered.lengthproducto{filtered.length!==1?'s':''}`;
+  cnt.textContent=`${filtered.length} producto${filtered.length!==1?'s':''}`;
 }
 
 // ── RENDER PRODUCTS ──
@@ -1138,15 +1138,15 @@ function renderProducts(){
     return `<article class="product">
       ${p.stock===0?'<span class="out-badge">SIN STOCK</span>':''}
       <div class="product-image" onclick="openQuickView(${p.id})" title="Ver más grande">
-        <img src="p.imagen||fb"alt="{p.descripcion}" onerror="this.onerror=null;this.src='${fb}'">
+        <img src="${p.imagen||fb}" alt="${p.descripcion}" onerror="this.onerror=null;this.src='${fb}'">
       </div>
       <div class="product-category">${p.categoria} › ${p.subcategoria}</div>
       <h3>${p.descripcion}</h3>
       <div class="brand-tag">${p.marca}</div>
       <div class="code">Cód: ${p.codigo}</div>
-      <div class="stock-info p.stock===0||low?'low':''">{stxt}</div>
+      <div class="stock-info ${p.stock===0||low?'low':''}">${stxt}</div>
       <div class="price">$ ${money(p.precio)}</div>
-      ${p.stock>0?`<div class="qty"><input id="q${gi}" value="1" type="number" min="1" max="p.stock"><buttononclick="chgQ('q{gi}',1)">▲</button><button onclick="chgQ('qgi',-1)">▼</button></div><buttonclass="buy"onclick="addToCart({gi})"><i class="fas fa-shopping-cart"></i> COMPRAR</button>`:`<button class="buy out" disabled>SIN STOCK</button>`}
+      ${p.stock>0?`<div class="qty"><input id="q${gi}" value="1" type="number" min="1" max="${p.stock}"><button onclick="chgQ('q${gi}',1)">▲</button><button onclick="chgQ('q${gi}',-1)">▼</button></div><button class="buy" onclick="addToCart(${gi})"><i class="fas fa-shopping-cart"></i> COMPRAR</button>`:`<button class="buy out" disabled>SIN STOCK</button>`}
       <div class="tax">c/iva</div>
     </article>`;
   }).join('');
@@ -1157,7 +1157,7 @@ function renderRtech(){
   const grid=document.getElementById('rtechGrid');
   const cnt=document.getElementById('rtechCount');
   const list=ALL.filter(p=>(p.marca||'').toUpperCase().includes('RTECH'));
-  cnt.textContent=list.length?`list.lengthproducto{list.length!==1?'s':''}`:'';
+  cnt.textContent=list.length?`${list.length} producto${list.length!==1?'s':''}`:'';
   if(!list.length){
     grid.innerHTML='<div class="no-results" style="grid-column:1/-1"><i class="fas fa-star"></i><p>Próximamente productos RTECH destacados.</p></div>';
     return;
@@ -1169,15 +1169,15 @@ function renderRtech(){
       <span class="feat-badge">RTECH DESTACADO</span>
       ${p.stock===0?'<span class="out-badge">SIN STOCK</span>':''}
       <div class="product-image" onclick="openQuickView(${p.id})" title="Ver más grande">
-        <img src="p.imagen||fb"alt="{p.descripcion}" onerror="this.onerror=null;this.src='${fb}'">
+        <img src="${p.imagen||fb}" alt="${p.descripcion}" onerror="this.onerror=null;this.src='${fb}'">
       </div>
       <div class="product-category">${p.categoria} › ${p.subcategoria}</div>
       <h3>${p.descripcion}</h3>
       <div class="brand-tag">${p.marca}</div>
       <div class="code">Cód: ${p.codigo}</div>
-      <div class="stock-info p.stock===0||low?'low':''">{p.stock===0?'SIN STOCK':low?`¡Solo ${p.stock}!`:`Stock: ${p.stock}`}</div>
+      <div class="stock-info ${p.stock===0||low?'low':''}">${p.stock===0?'SIN STOCK':low?`¡Solo ${p.stock}!`:`Stock: ${p.stock}`}</div>
       <div class="price">$ ${money(p.precio)}</div>
-      ${p.stock>0?`<div class="qty"><input id="rq${p.id}" value="1" type="number" min="1" max="p.stock"><buttononclick="chgQ('rq{p.id}',1)">▲</button><button onclick="chgQ('rqp.id',-1)">▼</button></div><buttonclass="buy"onclick="addToCartById({p.id},'rq${p.id}')"><i class="fas fa-shopping-cart"></i> COMPRAR</button>`:`<button class="buy out" disabled>SIN STOCK</button>`}
+      ${p.stock>0?`<div class="qty"><input id="rq${p.id}" value="1" type="number" min="1" max="${p.stock}"><button onclick="chgQ('rq${p.id}',1)">▲</button><button onclick="chgQ('rq${p.id}',-1)">▼</button></div><button class="buy" onclick="addToCartById(${p.id},'rq${p.id}')"><i class="fas fa-shopping-cart"></i> COMPRAR</button>`:`<button class="buy out" disabled>SIN STOCK</button>`}
       <div class="tax">c/iva</div>
     </article>`;
   }).join('');
@@ -1207,13 +1207,13 @@ function openQuickView(id){
   if(p.cilindrada)attrChips.push(`<span class="qv-attr">Cilindrada: ${p.cilindrada} cc</span>`);
   document.getElementById('qvBody').innerHTML=`
     <div class="qv-grid">
-      <div class="qv-img"><img src="p.imagen||fb"alt="{p.descripcion}" onerror="this.onerror=null;this.src='${fb}'"></div>
+      <div class="qv-img"><img src="${p.imagen||fb}" alt="${p.descripcion}" onerror="this.onerror=null;this.src='${fb}'"></div>
       <div class="qv-info">
-        <div class="qv-cat">${p.categoria} › p.subcategoria{p.producto&&p.producto!==p.subcategoria?' › '+p.producto:''}</div>
+        <div class="qv-cat">${p.categoria} › ${p.subcategoria}${p.producto&&p.producto!==p.subcategoria?' › '+p.producto:''}</div>
         <h3>${p.descripcion}</h3>
         <div class="qv-brand">${p.marca}</div>
         <div class="qv-code">Código: ${p.codigo}</div>
-        <div class="qv-stock p.stock===0||low?'low':''">{p.stock===0?'SIN STOCK':low?`¡Solo ${p.stock} disponibles!`:`Stock disponible: ${p.stock} unidades`}</div>
+        <div class="qv-stock ${p.stock===0||low?'low':''}">${p.stock===0?'SIN STOCK':low?`¡Solo ${p.stock} disponibles!`:`Stock disponible: ${p.stock} unidades`}</div>
         <div class="qv-price">$ ${money(p.precio)}</div>
         ${attrChips.length?`<div class="qv-attrs">${attrChips.join('')}</div>`:''}
         ${p.stock>0?`
@@ -1252,12 +1252,12 @@ document.addEventListener('keydown',e=>{
 function renderPagination(){
   const c=document.getElementById('pagination'),total=Math.ceil(filtered.length/PER_PAGE);
   if(total<=1){c.innerHTML='';return;}
-  let h=`<button currentPage===1?'disabled':''onclick="goPage({currentPage-1})">‹</button>`;
+  let h=`<button ${currentPage===1?'disabled':''} onclick="goPage(${currentPage-1})">‹</button>`;
   for(let i=1;i<=total;i++){
     if(total>7&&i>3&&i<total-1&&Math.abs(i-currentPage)>1){if(h.slice(-3)!=='...')h+='<button disabled>...</button>';continue;}
-    h+=`<button class="i===currentPage?'active':''"onclick="goPage({i})">${i}</button>`;
+    h+=`<button class="${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
   }
-  h+=`<button currentPage===total?'disabled':''onclick="goPage({currentPage+1})">›</button>`;
+  h+=`<button ${currentPage===total?'disabled':''} onclick="goPage(${currentPage+1})">›</button>`;
   c.innerHTML=h;
 }
 function goPage(p){currentPage=p;renderProducts();renderPagination();window.scrollTo({top:document.querySelector('.main-layout').offsetTop-20,behavior:'smooth'});}
@@ -1290,7 +1290,7 @@ function showSuggestions(q){
   }
   if(matches.length){
     h+=`<div class="sd-group-title"><i class="fas fa-box"></i> Productos</div>`;
-    matches.forEach(p=>{h+=`<div class="sd-item" onclick="quickGo('${p.codigo.replace(/'/g,"\\'")}')"><img src="${p.imagen||fb}" onerror="this.src='fb'"><divclass="sd-item-info"><b>{hlText(p.descripcion,q)}</b><small>${p.marca} · p.codigo{p.medida?' · '+p.medida:''}</small></div><div class="sd-item-price">$ ${money(p.precio)}</div></div>`;});
+    matches.forEach(p=>{h+=`<div class="sd-item" onclick="quickGo('${p.codigo.replace(/'/g,"\\'")}')"><img src="${p.imagen||fb}" onerror="this.src='${fb}'"><div class="sd-item-info"><b>${hlText(p.descripcion,q)}</b><small>${p.marca} · ${p.codigo}${p.medida?' · '+p.medida:''}</small></div><div class="sd-item-price">$ ${money(p.precio)}</div></div>`;});
   }
   const total=ALL.filter(p=>terms.every(t=>p._idx.includes(t))).length;
   h+=`<div class="sd-footer" onclick="executeSearch()">Ver los ${total} resultados →</div>`;
@@ -1373,7 +1373,7 @@ function renderCart(){
   const fb='https://via.placeholder.com/55x55/f9f9f9/ccc?text=IMG';
   if(!cart.length){c.innerHTML='<div class="empty-cart"><i class="fas fa-shopping-cart" style="font-size:48px;color:#ddd;margin-bottom:15px"></i><p>Tu carrito está vacío</p></div>';document.getElementById('total').textContent='0';btn.disabled=true;document.getElementById('checkoutForm').classList.remove('active');btn.style.display='block';return;}
   btn.disabled=false;
-  c.innerHTML=cart.map((it,i)=>`<div class="cart-item"><img src="it.imagen||fb"onerror="this.src='{fb}'"><div class="cart-item-info"><b>it.descripcion</b><divstyle="color:#777;font-size:10px">{it.codigo} · it.marca</div><divstyle="color:var(--green);font-weight:700;margin-top:2px"> money(it.precio)</div><divclass="cart-item-controls"><divclass="cart-item-qty"><buttononclick="updCQ({i},-1)">−</button><input value="it.qty"onchange="setCQ({i},this.value)"><button onclick="updCQ(i,1)">+</button></div><buttonclass="remove-btn"onclick="rmC({i})"><i class="fas fa-trash"></i></button></div></div><div style="font-weight:700;font-size:12px;white-space:nowrap">$ ${money(it.precio*it.qty)}</div></div>`).join('');
+  c.innerHTML=cart.map((it,i)=>`<div class="cart-item"><img src="${it.imagen||fb}" onerror="this.src='${fb}'"><div class="cart-item-info"><b>${it.descripcion}</b><div style="color:#777;font-size:10px">${it.codigo} · ${it.marca}</div><div style="color:var(--green);font-weight:700;margin-top:2px">$ ${money(it.precio)}</div><div class="cart-item-controls"><div class="cart-item-qty"><button onclick="updCQ(${i},-1)">−</button><input value="${it.qty}" onchange="setCQ(${i},this.value)"><button onclick="updCQ(${i},1)">+</button></div><button class="remove-btn" onclick="rmC(${i})"><i class="fas fa-trash"></i></button></div></div><div style="font-weight:700;font-size:12px;white-space:nowrap">$ ${money(it.precio*it.qty)}</div></div>`).join('');
   document.getElementById('total').textContent=money(cart.reduce((s,i)=>s+i.precio*i.qty,0));
 }
 function updCQ(i,d){cart[i].qty=Math.max(1,cart[i].qty+d);renderCart();}
@@ -1388,7 +1388,7 @@ function completePurchase(){
   let msg=`*NUEVO PEDIDO - FC RACING*\n\n*Cliente:*\n• Nombre: ${name}\n• Ciudad: ${city}\n• Dirección: ${addr}\n• Pago: ${pay}\n\n*Productos:*\n`;
   cart.forEach((it,i)=>{msg+=`\n${i+1}. ${it.descripcion}\n   Cód: ${it.codigo} | Marca: ${it.marca}\n   Cant: ${it.qty} | Unit: $${money(it.precio)}\n   Subtotal: $${money(it.precio*it.qty)}\n`;});
   msg+=`\n*TOTAL: $${money(total)}*`;
-  window.open(`https://wa.me/WHATSAPP?text={encodeURIComponent(msg)}`,'_blank');
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`,'_blank');
   cart=[];renderCart();toggleCart();
   ['customerName','customerCity','customerAddress','paymentMethod'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('checkoutForm').classList.remove('active');document.getElementById('checkoutBtn').style.display='block';
@@ -1400,8 +1400,3 @@ loadProducts();
 </script>
 </body>
 </html>
-
-
-
-
-
